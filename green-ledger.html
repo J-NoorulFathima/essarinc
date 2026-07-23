@@ -331,24 +331,47 @@
   .guarantee p{ color: var(--text-dim); font-size:14.5px; margin-bottom:12px; max-width: 720px; }
 
   /* ---------- FOOTER CTAs ---------- */
-  .cta-grid{ display:grid; grid-template-columns:1fr 1fr; gap: 26px; padding: 60px 0 70px; }
-  .cta-box{ position:relative; padding: 14px 24px; min-height:64px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; text-decoration:none; color:inherit; transition:.35s; }
+  .cta-grid{ display:grid; grid-template-columns:1fr 1fr; gap: 18px; padding: 44px 0 54px; }
+  .cta-box{ position:relative; padding: 10px 22px; min-height:48px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; text-decoration:none; color:inherit; transition:.35s; }
   .cta-box:hover{ transform: translateY(-6px); }
   .cta-box.dark{ background: linear-gradient(135deg, #0d1610, #060907); border:1px solid var(--line);}
   .cta-box.green{ background: linear-gradient(135deg, #1c3318, #0e1a0c); border:1px solid var(--green-dim);}
-  .cta-box h4{ font-family:'Cormorant Garamond', serif; font-size: 24px; font-weight:500; line-height:1.3; color:var(--text); }
+  .cta-box h4{ font-family:'Cormorant Garamond', serif; font-size: 21px; font-weight:500; line-height:1.25; color:var(--text); }
   .cta-box h4 .accent{ color: var(--green-bright); display:block; }
-  .cta-box .arrow{ margin-top: 18px; color: var(--gold); font-size:20px; }
+  .cta-box .arrow{ margin-top: 10px; color: var(--gold); font-size:18px; }
   .cta-icon{ position:absolute; right:12px; bottom:8px; opacity:0.2; width:32px; height:32px; color: var(--green); stroke:var(--green); }
 
-  @media (max-width: 900px){
+@media (max-width: 900px){
     .hero{ grid-template-columns:1fr; }
     .table-head, .row{ grid-template-columns:1fr; }
     .ledger-grid{ grid-template-columns:1fr; }
-    .stat-row, .emissions-row, .details-row{ grid-template-columns:1fr; }
     .cta-grid{ grid-template-columns:1fr; }
     .guarantee{ flex-direction:column; margin:0; }
     .wrap{ padding:0 22px; }
+
+
+
+    /* Keep the 3-column comparative table intact on tablet/phone.
+       Shrink text/padding to fit, and allow horizontal scroll as a
+       safety net on very narrow screens instead of ever stacking. */
+    .table{ overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .table-head, .row{ grid-template-columns: 140px 1fr 1fr; min-width: 560px; }
+    .table-head div{ padding: 12px 14px; font-size: 11.5px; }
+    .row > div{ padding: 16px 14px; font-size: 12.5px; }
+    .stage{ gap: 10px; }
+    .stage svg{ width: 20px; height: 20px; }
+    .stage .label{ font-size: 12.5px; }
+    .row ul li{ margin-bottom: 6px; }
+
+
+    /* Regroup the 4 stat boxes into a 2x2 grid on tablet + phone:
+       Row 1: Energy Consumed | Server Run-Time
+       Row 2: Data Transferred | Total Emissions
+       ISO chart drops to its own full-width row below */
+    .stats-block{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stats-block .stat-row,
+    .stats-block .emissions-row{ display:contents; }
+    .stats-block .aligned-box{ grid-column: 1 / -1; }
   }
 
   .compliance-footer {
@@ -512,6 +535,7 @@
           <div class="lc-id">Project ID: EL-24-0587</div>
         </div>
 
+<div class="stats-block">
         <div class="stat-row">
           <div class="stat-box">
             <div class="stat-label">Total Energy Consumed<br>(kWh)</div>
@@ -541,6 +565,7 @@
               <div style="height:80%" class="hi"></div><div style="height:45%"></div><div style="height:75%" class="hi"></div>
             </div>
           </div>
+        </div>
         </div>
 
         <div class="details-row">
