@@ -30,8 +30,8 @@
   --radius-md: 10px;
   --header-h: 76px;
 }
-@media (min-width: 768px) { :root { --gutter: 40px; } }
-@media (min-width: 1024px) { :root { --gutter: 64px; --header-h: 88px; } }
+@media (min-width: 768px){ :root{ --gutter: 40px; } }
+@media (min-width: 1024px){ :root{ --gutter: 64px; } }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-sans); color: var(--dark-charcoal-text); background: var(--off-white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
@@ -69,10 +69,29 @@ input, textarea { font-family: inherit; }
 .btn-solid-sage { background: var(--sage-green); color: #0E1A0D; border-color: var(--sage-green); }
 .btn-solid-sage:hover { background: #4C9143; }
 .btn-block { width: 100%; justify-content: center; }
-.compliance-footer { border-top: 1px solid var(--hairline-dark); padding: 26px var(--gutter) 40px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; color: var(--muted-silver); font-size: 0.78rem; line-height: 1.6; background: var(--obsidian); }
+
+.compliance-footer {
+  border-top: 1px solid var(--hairline-dark);
+  padding: 26px var(--gutter) 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  color: var(--muted-silver);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  background: var(--obsidian);
+}
 .compliance-footer .foot-brand { display: flex; align-items: center; gap: 10px; }
 .compliance-footer .foot-brand img { height: 22px; }
-@media (min-width: 768px) { .compliance-footer { flex-direction: row; align-items: center; justify-content: space-between; } }
+@media (min-width: 768px) {
+  .compliance-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
 .section { padding: 56px 0; }
 @media (min-width: 768px) { .section { padding: 80px 0; } }
 @media (min-width: 1024px) { .section { padding: 108px 0; } }
@@ -243,7 +262,7 @@ input, textarea { font-family: inherit; }
 <body class="page-workflow">
 <header class="site-header">
   <div class="wrap">
-    <a href="index.html" class="brand">
+    <a href="first.html" class="brand">
       <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15" stroke="#D4AF37" stroke-width="1.5"/><path d="M11 20L16 11L21 20" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
       ESSAR INC.
     </a>
@@ -251,7 +270,7 @@ input, textarea { font-family: inherit; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <nav class="primary-nav" id="primaryNav">
-      <a href="index.html">Home</a>
+      <a href="first.html">Home</a>
       <a href="second.html" class="is-active">Workflow</a>
       <a href="three.html">Green Ledger</a>
       <a href="four.html">About Us</a>
