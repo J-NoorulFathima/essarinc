@@ -163,14 +163,66 @@ input, textarea { font-family: inherit; }
 .delivery-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 @media (min-width: 640px) { .delivery-grid { grid-template-columns: 1fr 1fr; } }
 .video-card { background: var(--deep-slate); border-radius: var(--radius-md); overflow: hidden; color: var(--off-white); }
-.video-thumb { position: relative; aspect-ratio: 4/3; background: linear-gradient(135deg, #2c3b28, #0d130c); display: flex; align-items: center; justify-content: center; }
-.video-thumb .play-btn { width: 46px; height: 46px; border-radius: 50%; background: rgba(245,247,245,0.92); display: flex; align-items: center; justify-content: center; color: var(--obsidian); }
-.video-thumb .play-btn svg { width: 16px; height: 16px; margin-left: 2px; }
+.video-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: linear-gradient(135deg, #2c3b28, #0d130c); display: flex; align-items: center; justify-content: center; }
+.video-controls {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;               /* <-- the "gap must" you noted between play/volume */
+  padding: 10px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+}
+.vc-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+.vc-btn:hover { opacity: 1; }
+.vc-spacer { flex: 1; }   /* pushes fullscreen button to the far right */
 .video-thumb .filename { position: absolute; top: 12px; left: 12px; font-size: 0.68rem; color: var(--muted-silver); background: rgba(11,12,16,0.5); padding: 4px 8px; border-radius: 4px; }
 .video-meta { padding: 16px; }
 .video-badges { display: flex; gap: 8px; margin-bottom: 12px; }
 .video-badges span { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; border: 1px solid var(--hairline-dark); border-radius: 4px; padding: 3px 8px; color: var(--muted-silver); }
-.video-info { font-size: 0.72rem; color: var(--muted-silver); margin-bottom: 14px; }
+.video-info {
+  font-size: 0.85rem;
+  color: var(--muted-silver);
+  margin-bottom: 14px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .video-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;   /* stop justify-content from row layout messing vertical spacing */
+    text-align: center;
+    width: 100%;
+    flex-wrap: nowrap; 
+    margin-top: 17%;             /* cancel base rule's wrap — not needed in column mode */
+    margin-bottom: 25%;
+  }
+  .video-info .v-dot { display: none; }
+  .video-info .v-duration,
+  .video-info .v-size {
+    display: block;
+    width: 100%;                    /* both lines span full width so text-align:center works identically */
+  }
+  .video-info .v-duration {
+    margin-bottom: 20px;
+  }
+}
+
 .ledger-mini { background: #FBFBF9; border: 1px solid var(--hairline-light); border-radius: var(--radius-md); padding: 18px; }
 .ledger-mini .lm-brand { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 700; color: var(--forest-green); letter-spacing: 0.04em; margin-bottom: 4px; }
 .ledger-mini .lm-title { font-size: 0.68rem; color: var(--dark-charcoal-text); opacity: 0.65; margin-bottom: 14px; }
@@ -590,18 +642,44 @@ input, textarea { font-family: inherit; }
           <div class="delivery-grid">
             <div class="video-card hover-lift">
               <div class="video-thumb">
-                <span class="filename">FINAL_MASTER_v3.mp4</span>
-                <div class="play-btn">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
+  <video id="myVideo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" poster="hero-poster.png">
+    <source src="hero-video.mp4" type="video/mp4">
+  </video>
+  <span class="filename">FINAL_MASTER_v3.mp4</span>
+
+  <div class="video-controls" id="videoControls">
+    <button class="vc-btn" id="vcPlay" aria-label="Play or pause">
+      <svg id="vcPlayIcon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+
+    <button class="vc-btn vc-volume" id="vcVolume" aria-label="Mute or unmute">
+      <svg id="vcVolIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+        <path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor" stroke="none"/>
+        <path d="M16.5 8.5a5 5 0 010 7"/>
+        <path d="M19 6a9 9 0 010 12"/>
+      </svg>
+    </button>
+
+    <span class="vc-spacer"></span>
+
+    <button class="vc-btn" id="vcFullscreen" aria-label="Fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+        <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
+      </svg>
+    </button>
+  </div>
+</div>
               <div class="video-meta">
                 <div class="video-badges"><span>4K</span><span>HDR</span></div>
-                <div class="video-info">Duration: 01:32 &nbsp;·&nbsp; Size: 2.48 GB</div>
-                <a href="#" class="btn btn-solid-sage btn-block" style="padding:11px 18px; font-size:0.72rem;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5"/><path d="M4 20h16"/></svg>
-                  Download
-                </a>
+                <div class="video-info">
+  <span class="v-duration">Duration: 01:32</span>
+  <span class="v-dot"> &nbsp;·&nbsp; </span>
+  <span class="v-size">Size: 2.48 GB</span>
+</div>
+                <button class="btn btn-solid-sage btn-block" style="padding:11px 18px; font-size:0.72rem;" id="viewFullscreenBtn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  View Full Screen
+</button>
               </div>
             </div>
             <div class="ledger-mini hover-lift">
@@ -717,6 +795,46 @@ input, textarea { font-family: inherit; }
   }, { threshold: 0.5 });
   counters.forEach(el => countIO.observe(el));
 })();
+
+
+//video controls
+const vid = document.getElementById('myVideo');
+const vcPlay = document.getElementById('vcPlay');
+const vcPlayIcon = document.getElementById('vcPlayIcon');
+const vcVolume = document.getElementById('vcVolume');
+const vcFullscreen = document.getElementById('vcFullscreen');
+
+const PLAY_ICON  = '<path d="M8 5v14l11-7z"/>';
+const PAUSE_ICON = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+
+vcPlay.addEventListener('click', () => {
+  if (vid.paused) { vid.play(); } else { vid.pause(); }
+});
+vid.addEventListener('play',  () => { vcPlayIcon.innerHTML = PAUSE_ICON; });
+vid.addEventListener('pause', () => { vcPlayIcon.innerHTML = PLAY_ICON; });
+
+vcVolume.addEventListener('click', () => {
+  vid.muted = !vid.muted;
+  vcVolume.style.opacity = vid.muted ? '0.4' : '0.9';
+});
+
+vcFullscreen.addEventListener('click', () => {
+  if (vid.requestFullscreen) vid.requestFullscreen();
+  else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+});
+
+
+document.getElementById('viewFullscreenBtn').addEventListener('click', () => {
+  if (vid.requestFullscreen) {
+    vid.requestFullscreen();
+  } else if (vid.webkitRequestFullscreen) {
+    vid.webkitRequestFullscreen(); // Safari
+  } else if (vid.webkitEnterFullscreen) {
+    vid.webkitEnterFullscreen(); // iOS Safari (video only, not general elements)
+  }
+  vid.play(); // start playback once fullscreen opens
+});
+
 </script>
 
 </body>
