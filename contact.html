@@ -529,6 +529,39 @@
   .map-visual { width: 100%; max-width: 100%; height: 180px; aspect-ratio: unset; }
 }
 
+/* ============================================================
+   SCROLL REVEAL + HOVER LIFT — shared across all 5 pages
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-zoom {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-zoom.reveal-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-zoom { opacity: 1; transform: none; transition: none; }
+}
+
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
 </style>
 </head>
 <body data-page="contact">
@@ -563,7 +596,7 @@
 
 <main class="wrap">
 
-  <section class="hero">
+  <section class="hero reveal">
     <h1>Shield Your Film Making.<br>Elevate Your Story.</h1>
     <div class="rule"></div>
     <p>Partner with Essar Inc. to create cinematic, world-class marketing assets that actively reduce your Scope 3 liabilities. Let's build an audit-ready campaign tailored for your global export markets.</p>
@@ -580,7 +613,7 @@
 
   <form>
     <!-- STEP 1 -->
-    <div class="step">
+    <div class="step reveal" style="transition-delay:0s"></div>
       <div class="step-head">
         <span class="step-num">1</span>
         <h3>Your Identity:</h3>
@@ -602,30 +635,30 @@
     </div>
 
     <!-- STEP 2 -->
-    <div class="step">
+    <div class="step reveal" style="transition-delay:0s"></div>
       <div class="step-head">
         <span class="step-num">2</span>
         <h3>Your Global Footprint:</h3>
       </div>
       <div class="step-sub">What are your target export destinations? (Select all that apply)</div>
       <div class="check-grid">
-        <label class="check-card">
+        <label class="check-card hover-lift">
           <span class="glyph">🇪🇺</span>
           <span class="label"><input type="checkbox"> European Union (EU)</span>
         </label>
-        <label class="check-card">
+        <label class="check-card hover-lift">
           <span class="glyph">🇺🇸</span>
           <span class="label"><input type="checkbox"> United States (US)</span>
         </label>
-        <label class="check-card">
+        <label class="check-card hover-lift">
           <span class="glyph">🇬🇧</span>
           <span class="label"><input type="checkbox"> United Kingdom (UK)</span>
         </label>
-        <label class="check-card">
+        <label class="check-card hover-lift">
           <span class="glyph" style="color:var(--green-bright)">🌐</span>
           <span class="label"><input type="checkbox"> Middle East / Asia</span>
         </label>
-        <label class="check-card">
+        <label class="check-card hover-lift">
           <span class="glyph" style="color:var(--green-bright)">⌂</span>
           <span class="label"><input type="checkbox"> Domestic / Other</span>
         </label>
@@ -633,24 +666,24 @@
     </div>
 
     <!-- STEP 3 -->
-    <div class="step">
+    <div class="step reveal" style="transition-delay:0s"></div>
       <div class="step-head">
         <span class="step-num">3</span>
         <h3>Your Project Intent:</h3>
       </div>
       <div class="step-sub">Which tier of our unbundled network fits your current goal?</div>
       <div class="tier-grid">
-        <div class="tier-card">
+        <div class="tier-card hover-lift">
           <span class="glyph">📷</span>
           <div class="name">Localized Video Capture<br><span style="font-size:0.8rem;color:var(--text-faint)">(Raw Footprint)</span></div>
           <label><input type="checkbox"></label>
         </div>
-        <div class="tier-card">
+        <div class="tier-card hover-lift">
           <span class="glyph">☁</span>
           <div class="name">Tier 3 Cloud Editing &amp; Post-Production</div>
           <label><input type="checkbox"></label>
         </div>
-        <div class="tier-card">
+        <div class="tier-card hover-lift">
           <span class="glyph">🎬</span>
           <div class="name">Full-Service Cinematic Campaign + Green Ledger Tag</div>
           <label><input type="checkbox"></label>
@@ -659,7 +692,7 @@
     </div>
 
     <!-- STEP 4 -->
-    <div class="step">
+    <div class="step reveal" style="transition-delay:0s"></div>
       <div class="step-head">
         <span class="step-num">4</span>
         <h3>Briefly tell us about your product or brand message:</h3>
@@ -674,7 +707,7 @@
     <button type="submit" class="cta">INITIATE GREEN LEDGER BLUEPRINT <span>→</span></button>
   </form>
 
-  <div class="contact-panel">
+  <div class="contact-panel reveal">
     <div class="contact-left">
       <span class="env">✉</span>
       <div>
@@ -684,7 +717,7 @@
         <div class="contact-line">💬 WhatsApp <a href="#">+91 72000 23969</a></div>
       </div>
     </div>
-    <div class="map-visual">
+    <div class="map-visual reveal-zoom">
       <svg viewBox="0 0 320 190" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
@@ -732,6 +765,45 @@
   const msg = document.getElementById('msgBox');
   const count = document.getElementById('count');
   msg.addEventListener('input', () => { count.textContent = msg.value.length; });
+</script>
+
+<script>
+(function(){
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-zoom');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // Stat count-up
+  const counters = document.querySelectorAll('[data-count-to]');
+  const countIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const end = parseFloat(el.getAttribute('data-count-to'));
+      const decimals = (el.getAttribute('data-count-to').split('.')[1] || '').length;
+      const suffix = el.getAttribute('data-count-suffix') || '';
+      const duration = 1200;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / duration, 1);
+        const val = end * (1 - Math.pow(1 - p, 3)); // ease-out
+        el.textContent = val.toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => countIO.observe(el));
+})();
 </script>
 
 </body>
