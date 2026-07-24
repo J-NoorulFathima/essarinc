@@ -325,8 +325,7 @@
 
   /* ---------- FOOTER CTAs ---------- */
   .cta-grid{ display:grid; grid-template-columns:1fr 1fr; gap: 18px; padding: 44px 0 54px; }
-  .cta-box{ position:relative; padding: 10px 22px; min-height:48px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; text-decoration:none; color:inherit; transition:.35s; }
-  .cta-box:hover{ transform: translateY(-6px); }
+  .cta-box{ position:relative; padding: 10px 22px; min-height:48px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; text-decoration:none; color:inherit; }
   .cta-box.dark{ background: linear-gradient(135deg, #0d1610, #060907); border:1px solid var(--line);}
   .cta-box.green{ background: linear-gradient(135deg, #1c3318, #0e1a0c); border:1px solid var(--green-dim);}
   .cta-box h4{ font-family:'Cormorant Garamond', serif; font-size: 21px; font-weight:500; line-height:1.25; color:var(--text); }
@@ -389,6 +388,39 @@
   }
 }
 
+/* ============================================================
+   SCROLL REVEAL + HOVER LIFT — shared across all 5 pages
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-zoom {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-zoom.reveal-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-zoom { opacity: 1; transform: none; transition: none; }
+}
+
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
 </style>
 </head>
 <body data-page="green-ledger">
@@ -424,7 +456,7 @@
 <div class="wrap">
 
   <!-- HERO -->
-  <div class="hero">
+  <div class="hero reveal-zoom">
     <div class="formula-box">
       <div class="formula">
         <span class="brace">{</span>
@@ -434,7 +466,7 @@
       </div>
       <div class="eq-savings">= % Carbon Savings</div>
     </div>
-    <div class="hero-right">
+    <div class="hero-right reveal">
       <h1>We Don't Claim<br>Sustainability. We Prove It.</h1>
       <div class="gold-rule"></div>
       <p>Every media asset delivered by Essar Inc. is tagged with a transparent, self-attested Green Ledger. We map our data directly to ISO 14067 system boundaries, giving you the exact metrics to defend your Scope 3 compliance.</p>
@@ -451,7 +483,7 @@
         <div>Essar Inc. Digital Supply Chain (Optimized)</div>
       </div>
 
-      <div class="row">
+      <div class="row reveal" style="transition-delay:0s">
         <div class="stage">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
           <div class="label">01 / Mobility<br>&amp; Travel</div>
@@ -466,7 +498,7 @@
         </ul></div>
       </div>
 
-      <div class="row">
+      <div class="row reveal" style="transition-delay:0s">
         <div class="stage">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.4c.6.5 1 1.3 1 2.1V16h6v-1.5c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 2z"/></svg>
           <div class="label">02 / On-Site<br>Operations</div>
@@ -481,7 +513,7 @@
         </ul></div>
       </div>
 
-      <div class="row">
+      <div class="row reveal" style="transition-delay:0s">
         <div class="stage">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><rect x="2" y="4" width="20" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>
           <div class="label">03 / Post-<br>Production</div>
@@ -503,21 +535,21 @@
     <h2 class="section-title">Inside the Green Ledger</h2>
     <div class="ledger-grid">
       <div class="ledger-left">
-        <div class="ledger-item">
+        <div class="ledger-item reveal" style="transition-delay:0s">
           <div class="ledger-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
           <div>
             <h4>Node Energy Tracking (kWh):</h4>
             <p>The exact electrical consumption of the rendering servers, local workstations and cameras utilized during your project's specific lifecycle.</p>
           </div>
         </div>
-        <div class="ledger-item">
+        <div class="ledger-item reveal" style="transition-delay:0s">
           <div class="ledger-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
           <div>
             <h4>Network Transfer File Sizes (GB):</h4>
             <p>A transparent log of all data packets securely routed through our Tier 3 nodes, mapped to localized electrical grid emission factors.</p>
           </div>
         </div>
-        <div class="ledger-item">
+        <div class="ledger-item reveal" style="transition-delay:0s">
           <div class="ledger-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg></div>
           <div>
             <h4>Self-Attested Carbon Verification (kgCO₂e):</h4>
@@ -526,7 +558,7 @@
         </div>
       </div>
 
-      <div class="ledger-card">
+      <div class="ledger-card reveal-zoom hover-lift">
         <div class="ledger-card-head">
           <div class="lc-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M17 8c0 4-5 8-5 8s-5-4-5-8a5 5 0 0 1 10 0z"/></svg> ESSAR INC. GREEN LEDGER</div>
           <div class="lc-id">Project ID: EL-24-0587</div>
@@ -536,22 +568,22 @@
         <div class="stat-row">
           <div class="stat-box">
             <div class="stat-label">Total Energy Consumed<br>(kWh)</div>
-            <div class="stat-value">18.64 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+            <div class="stat-value"><span data-count-to="18.64">0</span> <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
           </div>
           <div class="stat-box">
             <div class="stat-label">Total Server Run-Time<br>(hours)</div>
-            <div class="stat-value">24.7 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <div class="stat-value"><span data-count-to="24.7">0</span> <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
           </div>
           <div class="stat-box">
             <div class="stat-label">Total Data Transferred<br>(GB)</div>
-            <div class="stat-value">83.2 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A4.5 4.5 0 0 1 17 18H6z"/></svg></div>
+            <div class="stat-value"><span data-count-to="83.2">0</span> <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A4.5 4.5 0 0 1 17 18H6z"/></svg></div>
           </div>
         </div>
 
         <div class="emissions-row">
           <div class="emissions-box">
             <div class="stat-label">Total Emissions (kgCO₂e)</div>
-            <div class="stat-value">4.12</div>
+            <div class="stat-value"><span data-count-to="4.12">0</span></div>
           </div>
           <div class="aligned-box">
             <div class="aligned-label">ISO 14067 ALIGNED</div>
@@ -590,7 +622,7 @@
 
   <!-- GUARANTEE -->
   <section style="padding-top:10px;">
-    <div class="guarantee">
+    <div class="guarantee reveal">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
       <div>
         <h3>Our Guarantee: Built to be Audited.</h3>
@@ -604,7 +636,7 @@
   <!-- FOOTER CTAs -->
   <div class="cta-grid">
 
-    <a href="portfolio.html" class="cta-box dark">
+    <a href="portfolio.html" class="cta-box dark hover-lift">
       <h4>
         View the Creative Proof:
         <span class="accent">Our Cinematic Portfolio &amp; Anthem</span>
@@ -616,7 +648,7 @@
       </svg>
     </a>
 
-    <a href="contact.html" class="cta-box green">
+    <a href="contact.html" class="cta-box green hover-lift">
       <h4>Configure Your<br>Project &amp; Green Ledger</h4>
       <div class="arrow">→</div>
       <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke-width="1">
@@ -651,6 +683,45 @@
     primaryNav.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded', 'false');
   }));
+</script>
+
+<script>
+(function(){
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-zoom');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // Stat count-up
+  const counters = document.querySelectorAll('[data-count-to]');
+  const countIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const end = parseFloat(el.getAttribute('data-count-to'));
+      const decimals = (el.getAttribute('data-count-to').split('.')[1] || '').length;
+      const suffix = el.getAttribute('data-count-suffix') || '';
+      const duration = 1200;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / duration, 1);
+        const val = end * (1 - Math.pow(1 - p, 3)); // ease-out
+        el.textContent = val.toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => countIO.observe(el));
+})();
 </script>
 
 </body>
