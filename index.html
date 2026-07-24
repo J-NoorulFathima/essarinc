@@ -257,9 +257,7 @@ input, textarea { font-family: inherit; }
   align-items: center;
   padding: 16px 26px;
   color: var(--off-white);
-  transition: transform 0.25s ease;
 }
-.banner-card:hover { transform: translateY(-3px); }
 
 .banner-card-content {
   position: relative;
@@ -592,6 +590,72 @@ input, textarea { font-family: inherit; }
   border-top: 1px solid var(--hairline-dark);
 }
 .ledger-meta strong { color: var(--off-white); font-weight: 500; }
+
+/* ============================================================
+   SCROLL REVEAL + HOVER LIFT — shared across all 5 pages
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-zoom {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-zoom.reveal-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-zoom { opacity: 1; transform: none; transition: none; }
+}
+
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+/* Rotating globe */
+@keyframes globe-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.banner-sphere-wrap svg {
+  animation: globe-spin 18s linear infinite;
+  transform-origin: 50% 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .banner-sphere-wrap svg { animation: none; }
+}
+
+/* Leaf growing animation */
+.leaf-draw {
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation: leaf-grow 2.4s ease-out infinite;
+}
+
+@keyframes leaf-grow {
+  0%   { stroke-dashoffset: 260; opacity: 0; }
+  8%   { opacity: 1; }
+  35%  { stroke-dashoffset: 0; opacity: 1; }
+  75%  { stroke-dashoffset: 0; opacity: 1; }
+  90%  { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 260; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .leaf-draw { animation: none; stroke-dashoffset: 0; opacity: 1; }
+}
+
 </style>
 </head>
 <body class="page-home">
@@ -625,7 +689,7 @@ input, textarea { font-family: inherit; }
     <source src="hero-video.mp4" type="video/mp4">
   </video>
     <div class="wrap">
-      <div class="hero-grid">
+      <div class="hero-grid reveal">
         <h1 class="h1-display">Premium Brand Storytelling. Engineered for Global ESG Compliance.</h1>
         <p class="sub-lead">Essar Inc. replaces carbon-heavy traditional film making with a decentralized network of hyper-local digital creators and cloud-based editing hubs. We deliver top-tier product media backed by a transparent sustainability framework.</p>
         <a href="contact.html" class="btn btn-outline-sage">Request an Audit-Ready Project Quote</a>
@@ -637,13 +701,13 @@ input, textarea { font-family: inherit; }
   <section class="section liability-section">
     <div class="wrap">
       <div class="liability-grid">
-        <div>
+        <div class="reveal">
           <h2 class="h2-display">Is Your Marketing Material a Scope 3 Liability?</h2>
           <div class="gold-rule"></div>
           <p class="body-copy" style="margin-top:20px;">For global exporters and forward-thinking MSMEs, international market access now demands absolute environmental transparency. Yet, every time a conventional urban agency is hired, heavy aviation miles (business travel for film making emits &gt; 0.40 pounds of CO2 per Traveler), crew transport, diesel generators and hospitality logistics is added directly to your balance sheet.</p>
           <p class="body-copy" style="margin-top:16px;">In the era of carbon emission endeavor and strict corporate compliance, conventional filmmaking has become a commercial flaw. Essar Inc. eliminates this risk at the source.</p>
         </div>
-        <div class="compare-card">
+        <div class="compare-card reveal-zoom hover-lift">
           <div class="compare-head">
             <div class="col-bad">Conventional Filmmaking</div>
             <div class="col-good">Essar Inc. Decentralized Model</div>
@@ -677,18 +741,18 @@ input, textarea { font-family: inherit; }
         <h2 class="h2-display">The Radically Efficient Film Making</h2>
         <div class="gold-rule center"></div>
       </div>
-      <div class="process-cols">
+      <div class="process-cols reveal" style="transition-delay:0s">
         <div class="process-col">
           <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.4 7-12a7 7 0 10-14 0c0 5.6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
           <h3>01 / Hyper-Local Capture</h3>
           <p class="body-copy">We unbundle production by activating our pre-vetted network of native creators. Raw, high-definition footage is captured exactly in-situ, in line with mutually approved storyboard, avoiding unnecessary carbon liabilities of typical film makers.</p>
         </div>
-        <div class="process-col">
+        <div class="process-col reveal" style="transition-delay:0.12s">
           <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 18a4 4 0 010-8 5 5 0 019.6-1.5A4.5 4.5 0 0117.5 18H7z"/><circle cx="8" cy="21" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="21" r="1.2" fill="currentColor" stroke="none"/><circle cx="16" cy="21" r="1.2" fill="currentColor" stroke="none"/></svg></div>
           <h3>02 / Decentralized Processing</h3>
           <p class="body-copy">The captured assets are instantly routed through high-performance, secured cloud nodes to Tier 3 Hub, for rendering and editing. Physical studio overhead is replaced by optimized digital architecture.</p>
         </div>
-        <div class="process-col">
+        <div class="process-col reveal" style="transition-delay:0.24s">
           <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 14l2 2 4-4"/></svg></div>
           <h3>03 / The Green Ledger Delivery</h3>
           <p class="body-copy">You receive a cinematic, world-class promotional asset, permanently pinned with a transparent record of its operational energy footprint — fully prepared for the international screening.</p>
@@ -701,22 +765,22 @@ input, textarea { font-family: inherit; }
   <section class="section audit-section" style="padding-top:0;">
     <div class="wrap">
       <div class="audit-grid">
-        <div>
+        <div class="reveal">
           <h2 class="h2-display">Audit-Ready Execution.</h2>
           <div class="gold-rule"></div>
           <p class="body-copy" style="margin-top:20px;">We do not guess, speculate or hide behind vague green claims. Every video delivered by Essar Inc. is tagged with a self-attested Sustainability Ledger mapped directly to ISO 14067 system boundaries.</p>
           <p class="body-copy" style="margin-top:16px;">We share your corporate compliance officers the precise power consumption metrics, server run-times and network file sizes of your project's lifecycle. Should your international buyers or export boards demand a third-party stamp, our data logs are entirely structured for seamless, direct external verification on demand.</p>
         </div>
-        <div class="ledger-card">
+        <div class="ledger-card reveal-zoom hover-lift">
           <div class="ledger-title">Sustainability Ledger - Project Summary</div>
           <div class="ledger-stats">
-            <div><span class="k">Total Energy Consumed (kWh)</span><span class="v">18.64 🍃</span></div>
-            <div><span class="k">Total Server Run-Time (hours)</span><span class="v">24.7 ⏱</span></div>
-            <div><span class="k">Total Data Transferred (GB)</span><span class="v">83.2 ☁</span></div>
+            <div><span class="k">Total Energy Consumed (kWh)</span><span class="v"><span data-count-to="18.64">0</span> 🍃</span></div>
+            <div><span class="k">Total Server Run-Time (hours)</span><span class="v"><span data-count-to="24.7">0</span> ⏱</span></div>
+            <div><span class="k">Total Data Transferred (GB)</span><span class="v"><span data-count-to="83.2">0</span> ☁</span></div>
           </div>
           <div class="ledger-panel">
             <span class="panel-label">Emission Summary (ISO 14067 Aligned)</span>
-            <div class="ledger-emission"><span class="big">4.12</span><span class="unit">kg CO2e Total Estimated Emissions</span></div>
+            <div class="ledger-emission"><span class="big"><span data-count-to="4.12">0</span></span><span class="unit">kg CO2e Total Estimated Emissions</span></div>
             <div class="bar-chip-row">
               <i style="height:30%"></i><i style="height:45%"></i><i style="height:38%"></i><i style="height:60%"></i>
               <i style="height:50%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:80%"></i>
@@ -738,18 +802,18 @@ input, textarea { font-family: inherit; }
       <div class="banner-card-row">
 
         <!-- Card 1: Forest green with leaf illustration -->
-        <a href="workflow.html" class="banner-card banner-card-green">
+        <a href="workflow.html" class="banner-card banner-card-green hover-lift">
           <div class="banner-leaf-wrap" aria-hidden="true">
             <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
               <g fill="none" stroke="#5a7a52" stroke-width="1.2" opacity="0.85">
-                <path d="M150 380 C140 320 145 260 150 200" />
-                <path d="M150 200 C90 190 60 140 50 70 C110 90 150 130 150 200 Z" />
-                <path d="M150 200 C210 190 240 140 250 70 C190 90 150 130 150 200 Z" />
-                <path d="M150 260 C100 250 75 210 65 150 C115 165 150 200 150 260 Z" />
-                <path d="M150 260 C200 250 225 210 235 150 C185 165 150 200 150 260 Z" />
-                <path d="M150 320 C110 312 90 280 82 230 C122 245 150 275 150 320 Z" />
-                <path d="M150 320 C190 312 210 280 218 230 C178 245 150 275 150 320 Z" />
-                <path d="M150 70 C142 55 145 40 150 25 C155 40 158 55 150 70 Z" />
+                <path class="leaf-draw" style="animation-delay:0s"    d="M150 380 C140 320 145 260 150 200" />
+                <path class="leaf-draw" style="animation-delay:0.4s"  d="M150 320 C110 312 90 280 82 230 C122 245 150 275 150 320 Z" />
+                <path class="leaf-draw" style="animation-delay:0.4s"  d="M150 320 C190 312 210 280 218 230 C178 245 150 275 150 320 Z" />
+                <path class="leaf-draw" style="animation-delay:0.55s" d="M150 260 C100 250 75 210 65 150 C115 165 150 200 150 260 Z" />
+                <path class="leaf-draw" style="animation-delay:0.55s" d="M150 260 C200 250 225 210 235 150 C185 165 150 200 150 260 Z" />
+                <path class="leaf-draw" style="animation-delay:0.7s"  d="M150 200 C90 190 60 140 50 70 C110 90 150 130 150 200 Z" />
+                <path class="leaf-draw" style="animation-delay:0.7s"  d="M150 200 C210 190 240 140 250 70 C190 90 150 130 150 200 Z" />
+                <path class="leaf-draw" style="animation-delay:0.85s" d="M150 70 C142 55 145 40 150 25 C155 40 158 55 150 70 Z" />
               </g>
             </svg>
           </div>
@@ -760,7 +824,7 @@ input, textarea { font-family: inherit; }
         </a>
 
         <!-- Card 2: Obsidian with wireframe sphere -->
-        <a href="green-ledger.html" class="banner-card banner-card-dark">
+        <a href="green-ledger.html" class="banner-card banner-card-dark hover-lift">
           <div class="banner-sphere-wrap" aria-hidden="true">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
               <g fill="none" stroke="#c9a24b" stroke-width="0.6" opacity="0.85">
@@ -840,6 +904,45 @@ input, textarea { font-family: inherit; }
     primaryNav.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded', 'false');
   }));
+</script>
+
+<script>
+(function(){
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-zoom');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // Stat count-up
+  const counters = document.querySelectorAll('[data-count-to]');
+  const countIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const end = parseFloat(el.getAttribute('data-count-to'));
+      const decimals = (el.getAttribute('data-count-to').split('.')[1] || '').length;
+      const suffix = el.getAttribute('data-count-suffix') || '';
+      const duration = 1200;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / duration, 1);
+        const val = end * (1 - Math.pow(1 - p, 3)); // ease-out
+        el.textContent = val.toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => countIO.observe(el));
+})();
 </script>
 </body>
 </html>
